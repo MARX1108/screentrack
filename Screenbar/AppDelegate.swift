@@ -11,11 +11,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     @IBOutlet weak var window: NSWindow!
     
-    let statusItem = NSStatusBar.system().statusItem(withLength: -2)
+    let statusItem = NSStatusBar.system.statusItem(withLength: -2)
     let mainWindowPopover = NSPopover()
     var eventMonitor : EventMonitor?
     
-    static let applicationDelegate: AppDelegate = NSApplication.shared().delegate as! AppDelegate
+    static let applicationDelegate: AppDelegate = NSApplication.shared.delegate as! AppDelegate
     static var SessionNumber = [Int]()
     
     var fileNameDictionary: NSMutableDictionary = NSMutableDictionary()
@@ -249,7 +249,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return counter
     }
     
-    func showMainWindow() {
+    @objc func showMainWindow() {
         if let button = statusItem.button {
             if(self.mainWindowPopover.isShown) {
                 self.hideMainWindow(self)
@@ -311,7 +311,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             } catch {
                 // Customize this code block to include application-specific recovery steps.
                 let nserror = error as NSError
-                NSApplication.shared().presentError(nserror)
+                NSApplication.shared.presentError(nserror)
             }
         }
     }

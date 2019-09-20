@@ -84,7 +84,7 @@ class OpenSoftware : NSObject{
                 let end = urlAndPath.index(urlAndPath.endIndex, offsetBy: 0)
                 let range = start..<end
                 let tempUrl = urlAndPath[range]
-                if(FileManager.default.fileExists(atPath: tempUrl)){
+                if(FileManager.default.fileExists(atPath: String(tempUrl))){
                     let first = "tell application \""
                     let second = "\" \n open \""
                     let third = "\" \n end tell"
@@ -119,7 +119,7 @@ class OpenSoftware : NSObject{
                 let end = urlAndPath.index(urlAndPath.endIndex, offsetBy: 0)
                 let range = start..<end
                 let tempUrl = urlAndPath[range]
-                if(FileManager.default.fileExists(atPath: tempUrl)){
+                if(FileManager.default.fileExists(atPath: String(tempUrl))){
                     let first = "tell application \""
                     let second = "\" \n open \""
                     let third = "\" \n end tell"
@@ -152,7 +152,7 @@ class OpenSoftware : NSObject{
                 let end = urlAndPath.index(urlAndPath.endIndex, offsetBy: 0)
                 let range = start..<end
                 let tempUrl = urlAndPath[range]
-                if (FileManager.default.fileExists(atPath: tempUrl)){
+                if (FileManager.default.fileExists(atPath: String(tempUrl))){
                     let first = "tell application \"Adobe Acrobat Reader DC\" \n activate \n open \""
                     let second = "\" \n end tell"
                     let final = first + tempUrl + second
@@ -177,7 +177,7 @@ class OpenSoftware : NSObject{
         }
         else{
             //"Xcode"
-            let url = NSWorkspace.shared().fullPath(forApplication: name)
+            let url = NSWorkspace.shared.fullPath(forApplication: name)
             let one = "tell application" + url! + "to activate"
             let first = "tell application \""
             let second = "\" \n activate \n end tell"
@@ -196,7 +196,7 @@ class OpenSoftware : NSObject{
         let end = url.index(url.endIndex, offsetBy: 0)
         let range = start..<end
         let mySubstring = url[range]
-        return mySubstring
+        return String(mySubstring)
     }
     //
     

@@ -23,7 +23,7 @@ var erpath = MyVariables.errorPath
 
 @available(OSX 10.13, *)
 class MainWindowViewController: NSViewController {
-    static let applicationDelegate: AppDelegate = NSApplication.shared().delegate as! AppDelegate
+    static let applicationDelegate: AppDelegate = NSApplication.shared.delegate as! AppDelegate
     
     @IBOutlet weak var secondsTextBox: NSTextField!
     @IBOutlet weak var errorMessage: NSTextField!
@@ -63,7 +63,7 @@ class MainWindowViewController: NSViewController {
     
     
     var mouseLocation: NSPoint {
-        return NSEvent.mouseLocation()
+        return NSEvent.mouseLocation
     }
     var location: NSPoint {
         return window.mouseLocationOutsideOfEventStream
@@ -154,13 +154,13 @@ class MainWindowViewController: NSViewController {
 
     // get the information of whether have sound or not
     func setPlaySound() {
-        self.playSound.state = Settings.getPlaySound()
+        self.playSound.state = NSControl.StateValue(rawValue: Settings.getPlaySound())
     }
     
     // show error
     // what error?
     func setDetectSwitch(){
-        self.DetectSwitchCheckButton.state = Settings.getDetectSwitch()
+        self.DetectSwitchCheckButton.state = NSControl.StateValue(rawValue: Settings.getDetectSwitch())
     }
     //
     
@@ -197,7 +197,7 @@ class MainWindowViewController: NSViewController {
     
     
     func close() {
-        let appDelegate : AppDelegate = NSApplication.shared().delegate as! AppDelegate
+        let appDelegate : AppDelegate = NSApplication.shared.delegate as! AppDelegate
         appDelegate.hideMainWindow(self)
     }
     
@@ -230,7 +230,7 @@ class MainWindowViewController: NSViewController {
         }
         else {
             self.hideError()
-            self.saveSettings(seconds, path: path, playSound: playSound, height: Int(height)!, DetectSwitchCheckButton: DetectSwitchCheckButton)
+            self.saveSettings(seconds, path: path, playSound: playSound.rawValue, height: Int(height)!, DetectSwitchCheckButton: DetectSwitchCheckButton.rawValue)
         }
         return success;
     }
@@ -281,7 +281,8 @@ class MainWindowViewController: NSViewController {
         //not take a screenshot at the start of the application
         //screenshotHandler.take()
         //useless
-        NotificationCenter.default.addObserver(self, selector: #selector(abd(notification:)), name:NSNotification.Name.NSApplicationDidBecomeActive, object: (Any).self)
+        NotificationCenter.default.addObserver(self, selector: #selector(abd(notification:)), name:NSNotification.Name.Application, object: (Any).self)
+        
         //
         self.timerScreenshot = Timer.scheduledTimer(timeInterval: seconds!, target: screenshotHandler, selector: #selector(ScreenShot.take), userInfo: nil, repeats: true)
         
@@ -316,7 +317,7 @@ class MainWindowViewController: NSViewController {
     // Go to the folder that save the screenshots
     @IBAction func GoToTheFolder(_ sender: Any) {
 
-        NSWorkspace.shared().openFile(MyVariables.yourVariable)
+        NSWorkspace.shared.openFile(MyVariables.yourVariable)
         self.view.window?.close()
     }
     
@@ -333,7 +334,7 @@ class MainWindowViewController: NSViewController {
     //
     func compressionSliderValueSet(){
         let screen = NSScreen.main
-        let rect = screen()?.frame
+        let rect = screen?.frame
         //let height = Int((rect?.size.height)!)
         let width = Int((rect?.size.width)!)
         CompressionSlider.minValue = Double(width / 6)

@@ -627,7 +627,7 @@ class TimeLapseMethodWindow: NSViewController {
         let alert = NSAlert()
         alert.messageText = question
         alert.informativeText = text
-        alert.alertStyle = NSAlertStyle.warning
+        alert.alertStyle = NSAlert.Style.warning
         alert.addButton(withTitle: "OK")
         //alert.addButton(withTitle: "Cancel")
         //return alert.runModal() == NSAlertFirstButtonReturn
@@ -723,8 +723,8 @@ class TimeLapseMethodWindow: NSViewController {
         if DicMessage["PhotoName"] != nil{
             name = DicMessage["PhotoName"] as! String
         }
-        let start = name.characters.index(of: "-")
-        let end = name.characters.index(of: "j")
+        guard let start = name.index(of: "-") else { return "" }
+        guard let end = name.index(of: "j") else { return "" }
         let subStr = name[start..<end]
         let newStart = subStr.index(subStr.startIndex, offsetBy: 1)
         let newEnd = subStr.index(subStr.endIndex, offsetBy : -1)
@@ -734,7 +734,7 @@ class TimeLapseMethodWindow: NSViewController {
         
         
         //print(temp)
-        return temp
+        return String(temp)
     }
     // end of TimeSubstringFromPhotoName()
     
@@ -774,7 +774,7 @@ class TimeLapseMethodWindow: NSViewController {
         self.playImageTimer = Timer.scheduledTimer(timeInterval: TimeInterval(speed), target: self, selector: #selector(self.imagePlay), userInfo: nil, repeats: repeatBool)
 //        self.playImageTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.printtext), userInfo: nil, repeats: true)
     }
-    func imagePlay(){
+    @objc func imagePlay(){
         openEnclosingFolderButton.isEnabled = true
         let temp = Int(Slider.doubleValue)
         
@@ -1555,7 +1555,7 @@ class TimeLapseMethodWindow: NSViewController {
             "30"    : "30th",
             "31"    : "31st"
         ]
-        let dayName = dictionaryForDay[dayDigit!]
+        let dayName = dictionaryForDay[dayDigit]
         
         let timeIndex = str.index(str.endIndex, offsetBy : -8)
         let timeDigit = String(str[timeIndex...])
@@ -1638,7 +1638,7 @@ class TimeLapseMethodWindow: NSViewController {
             "11"    : "Nove",
             "12"    : "Dec"
         ]
-        let monthName = dictionary[monthDigit!]
+        let monthName = dictionary[monthDigit]
         
         let dayIndexStart = str.index(str.startIndex, offsetBy : 15)
         let datIndexEnd = str.index(str.endIndex, offsetBy : -13)
@@ -1676,7 +1676,7 @@ class TimeLapseMethodWindow: NSViewController {
             "30"    : "30th",
             "31"    : "31st"
         ]
-        let dayName = dictionaryForDay[dayDigit!]
+        let dayName = dictionaryForDay[dayDigit]
         
         //let timeIndex = str.index(str.endIndex, offsetBy : -8)
         //let timeDigit = String(str[timeIndex...])
@@ -1843,7 +1843,7 @@ class TimeLapseMethodWindow: NSViewController {
             let DicMessage = RelatedInformationHandler.BasedOnJsonPath(jsonpath : JsonFilePath, screenshot : ImageName)
             //InformationDisplayArea.stringValue = DicMessage.description
             let screen = NSScreen.main
-            let rect = screen()?.frame
+            let rect = screen?.frame
             let width = Int((rect?.size.width)!)
             let height = Int((rect?.size.height)!)
             let ratio = width / Int(nsImage!.size.width)

@@ -9,7 +9,7 @@ class ScreenShot : NSObject {
     let ImageCompressHandler = ImageCompress()
     
     
-    @available(OSX 10.13, *)
+    @objc @available(OSX 10.13, *)
     func take() {
         // dataString is the vaule store current data
         let dateString = self.getDate()
@@ -70,7 +70,7 @@ class ScreenShot : NSObject {
         let Newimage = NSImage(contentsOf: URL(fileURLWithPath: OriginialimageName))
         //print(Newimage?.size.height)
         //let Newimage = NSImage(byReferencing: URL(fileURLWithPath: OriginialimageName))
-        let urlStr : NSString = OriginialimageNameFullPath.addingPercentEscapes(using: String.Encoding(rawValue: String.Encoding.utf8.rawValue))! as NSString
+        let urlStr : NSString = OriginialimageNameFullPath.addingPercentEncoding(withAllowedCharacters: String.Encoding(rawValue: String.Encoding.utf8.rawValue))! as NSString
         
         let url = URL(string: urlStr as String)
         ImageCompressHandler.resize(image: Newimage!
@@ -140,13 +140,13 @@ class ScreenShot : NSObject {
                 let temp = String(describing: output.atIndex(i)?.int32Value)
                 //arr = arr +
                 if temp != nil || temp != "nil"{
-                    let start = temp.characters.index(of: "(")!
-                    let end = temp.characters.index(of: ")")!
+                    let start = temp.index(of: "(")!
+                    let end = temp.index(of: ")")!
                     let subStr = temp[start..<end]
                     let newStart = subStr.index(subStr.startIndex, offsetBy: 1)
                     let newEnd = subStr.index(subStr.endIndex, offsetBy : 0)
                     let range = newStart..<newEnd
-                    arr.append(subStr[range])
+                    //arr.append( subStr[range])
                 }
                 else{
                     
@@ -180,8 +180,8 @@ class ScreenShot : NSObject {
             for i in 1..<3{
                 let temp = String(describing: output.atIndex(i)?.int32Value)
                 //arr = arr +
-                let start = temp.characters.index(of: "(")!
-                let end = temp.characters.index(of: ")")!
+                let start = temp.index(of: "(")!
+                let end = temp.index(of: ")")!
                 let subStr = temp[start..<end]
                 let newStart = subStr.index(subStr.startIndex, offsetBy: 1)
                 let newEnd = subStr.index(subStr.endIndex, offsetBy : 0)
@@ -191,7 +191,7 @@ class ScreenShot : NSObject {
             //return arr
         }
         let screen = NSScreen.main
-        let rect = screen()?.frame
+        let rect = screen?.frame
         let height = Int((rect?.size.height)!)
         let width = Int((rect?.size.width)!)
         
@@ -240,8 +240,8 @@ class ScreenShot : NSObject {
             for i in 1..<3{
                 let temp = String(describing: output.atIndex(i)?.int32Value)
                 //arr = arr +
-                let start = temp.characters.index(of: "(")!
-                let end = temp.characters.index(of: ")")!
+                let start = temp.index(of: "(")!
+                let end = temp.index(of: ")")!
                 let subStr = temp[start..<end]
                 let newStart = subStr.index(subStr.startIndex, offsetBy: 1)
                 let newEnd = subStr.index(subStr.endIndex, offsetBy : 0)
